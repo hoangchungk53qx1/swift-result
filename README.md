@@ -8,7 +8,7 @@ Requires Swift 6.0+ (typed throws).
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/<you>/swift-result.git", from: "0.1.0")
+    .package(url: "https://github.com/hoangchungk53qx1/swift-result.git", from: "1.0.3")
 ]
 // target dependency: "SwiftResult"
 ```
