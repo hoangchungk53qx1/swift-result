@@ -36,7 +36,8 @@ dependencies: [
 | `zipOrAccumulate` (2–5) | `zipOrAccumulate` (2–5), failure wrapped in `AccumulatedErrors` |
 | `combine` / `getAll` / `getAllErrors` / `partition` | `Sequence` extensions, same names |
 | `toResultOr` | `Optional.toResultOr(_:)` |
-| `binding { .bind() }` | `binding { try result.get() }` (sync & async, typed throws) |
+| `.bind()` | `try result.bind()` (typed throws — stdlib `get()` throws `any Error`) |
+| `binding { .bind() }` | `binding { try result.bind() }` (sync & async, typed throws) |
 | `runCatching` | `runCatchingCancellationSafe` (cancellation propagates, domain errors become `.failure`) |
 
 ## Examples
@@ -44,10 +45,10 @@ dependencies: [
 ```swift
 import SwiftResult
 
-// Monad comprehension — `try .get()` is Kotlin's `.bind()`
+// Monad comprehension — `try .bind()` is Kotlin's `.bind()`
 let result: Result<Int, AppError> = binding {
-    let page = try pageResult.get()
-    let detail = try detailResult.get()
+    let page = try pageResult.bind()
+    let detail = try detailResult.bind()
     return page.totalCount + detail.categories.count
 }
 

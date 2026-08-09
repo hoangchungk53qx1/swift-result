@@ -215,8 +215,8 @@ struct OptionalTests {
 struct BindingTests {
 	@Test func bindingSuccess() {
 		let result: Result<Int, TestError> = binding {
-			let a = try ok.get()
-			let b = try Result<Int, TestError>.success(3).get()
+			let a = try ok.bind()
+			let b = try Result<Int, TestError>.success(3).bind()
 			return a + b
 		}
 		#expect(result == .success(5))
@@ -225,7 +225,7 @@ struct BindingTests {
 	@Test func bindingShortCircuits() {
 		var reached = false
 		let result: Result<Int, TestError> = binding {
-			let a = try err.get()
+			let a = try err.bind()
 			reached = true
 			return a
 		}

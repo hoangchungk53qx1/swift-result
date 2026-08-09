@@ -33,16 +33,16 @@ struct AsyncOperatorTests {
 
 	@Test func asyncBinding() async {
 		let result: Result<Int, TestError> = await binding { () async throws(TestError) -> Int in
-			let a = try ok.get()
+			let a = try ok.bind()
 			await Task.yield()
-			let b = try Result<Int, TestError>.success(3).get()
+			let b = try Result<Int, TestError>.success(3).bind()
 			return a + b
 		}
 		#expect(result == .success(5))
 
 		let failed: Result<Int, TestError> = await binding { () async throws(TestError) -> Int in
 			await Task.yield()
-			return try err.get()
+			return try err.bind()
 		}
 		#expect(failed == .failure(.notFound))
 	}
