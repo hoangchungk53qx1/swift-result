@@ -214,7 +214,7 @@ struct OptionalTests {
 @Suite("Binding")
 struct BindingTests {
 	@Test func bindingSuccess() {
-		let result: Result<Int, TestError> = binding {
+		let result: Result<Int, TestError> = binding { () throws(TestError) -> Int in
 			let a = try ok.bind()
 			let b = try Result<Int, TestError>.success(3).bind()
 			return a + b
@@ -224,7 +224,7 @@ struct BindingTests {
 
 	@Test func bindingShortCircuits() {
 		var reached = false
-		let result: Result<Int, TestError> = binding {
+		let result: Result<Int, TestError> = binding { () throws(TestError) -> Int in
 			let a = try err.bind()
 			reached = true
 			return a

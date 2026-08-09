@@ -17,11 +17,14 @@ extension Result {
 /// `try someResult.bind()` plays the role of Kotlin's `.bind()` — the first failure
 /// short-circuits the whole block into a `.failure`.
 ///
-///     let result: Result<Int, AppError> = binding {
+///     let result: Result<Int, AppError> = binding { () throws(AppError) -> Int in
 ///         let page = try pageResult.bind()
 ///         let detail = try detailResult.bind()
 ///         return page.totalCount + detail.categories.count
 ///     }
+///
+/// Note: multi-statement closures need the explicit `() throws(E) -> V` signature —
+/// the compiler does not infer a typed throw from the body.
 @inlinable
 public func binding<V, E: Error>(_ body: () throws(E) -> V) -> Result<V, E> {
 	do throws(E) {

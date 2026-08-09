@@ -45,8 +45,9 @@ dependencies: [
 ```swift
 import SwiftResult
 
-// Monad comprehension — `try .bind()` is Kotlin's `.bind()`
-let result: Result<Int, AppError> = binding {
+// Monad comprehension — `try .bind()` is Kotlin's `.bind()`.
+// Multi-statement closures need the explicit typed-throws signature.
+let result: Result<Int, AppError> = binding { () throws(AppError) -> Int in
     let page = try pageResult.bind()
     let detail = try detailResult.bind()
     return page.totalCount + detail.categories.count
